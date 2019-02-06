@@ -1,0 +1,26 @@
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+[user]
+	name = Name Surname
+  email = example@gmail.com
+[core]
+	editor = vim
+[color]
+	ui = true
+[alias]
+	lg = !git log --graph --pretty=format:'%C(131)%h%Creset %C(113)(%ci)%Creset -%C(220)%d%Creset %s %C(39)<%an>%Creset' --abbrev-commit --date=relative
+	lgfzf = !git-lg-fzf
+	rank = shortlog -sn --no-merges
+	cmt = !git add . && git add -u && git commit -m
+	details = log -n1 -p --format=fuller
+	d = difftool
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
