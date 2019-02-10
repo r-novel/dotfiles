@@ -12,10 +12,6 @@ function parse_git_branch() {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
-alias bash-config='vim $HOME/.bashrc'
-alias vim-config='vim $HOME/.vimrc'
-alias tmux-config='vim $HOME/.tmux.conf'
-
 function git-acp() {
   local base=`echo $(parse_git_branch) | cut -d'/' -f 2 | cut -c 2- | rev | cut -c 2- | rev` 
   if [ -z $(parse_git_branch) ]; then
@@ -76,8 +72,12 @@ function tmux-help() {
 	printf "\033[38;5;39m:~\033[0m $ \033[5;49;36m<C-a> t\033[0m \t\t\t\t/* big clock; */\n"
 	printf "\033[38;5;39m:~\033[0m $ \033[5;49;36m<C-a> ?\033[0m \t\t\t\t/* list shortcuts; */\n"
 	printf "\033[38;5;39m:~\033[0m $ \033[5;49;36m<C-a> :\033[0m \t\t\t\t/* prompt; */\n"
-	
+
 }
+
+alias bash-config='vim $HOME/.bashrc'
+alias vim-config='vim $HOME/.vimrc'
+alias tmux-config='vim $HOME/.tmux.conf'
 
 PROG_DIR=$HOME/Documents/programming
 alias to-dotvim='cd $HOME/.vim'
