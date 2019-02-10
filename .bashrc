@@ -53,7 +53,7 @@ function git-exec() {
   
   local message=`echo $msg`
 
-  git add . && git commit -m "'$msg'" && git push origin $branch
+  git add . && git commit -m "$msg" && git push origin $branch
 }
 
 function tmux-help() {
