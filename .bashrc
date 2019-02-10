@@ -16,44 +16,38 @@ alias bash-config='vim $HOME/.bashrc'
 alias vim-config='vim $HOME/.vimrc'
 alias tmux-config='vim $HOME/.tmux.conf'
 
-function git-exec() {
+function git-acp() {
   local base=`echo $(parse_git_branch) | cut -d'/' -f 2 | cut -c 2- | rev | cut -c 2- | rev` 
-  
   if [ -z $(parse_git_branch) ]; then
-    echo '[i]: branch not found. move to local repository.'
+    printf "\033[1;32m[i]: branch not found. move to local repository.\033[0m\n"
     return
   else if [ "$base" = "master" ]; then
-    echo '[w]: it is master branch; auto checkout on default feature branch...'
+    printf "\033[01;38;05;214m[w]: it is master branch; auto checkout on default feature branch...\033[0m\n"
     git checkout -b "feature/master/#0"
-    echo '[i]: default feature branch has been created.'
+    printf "\033[1;32m[i]: default feature branch has been created.\033[0m\n"
     fi
   fi
   
-  local kind=`echo $(parse_git_branch) | cut -d'/' -f 1 | cut -c 2- `  
-  echo $kind
+  local branch=`echo $(parse_git_branch) | cut -c 2- | rev | cut -c 2- | rev`
 
+  local kind=`echo $(parse_git_branch) | cut -d'/' -f 1 | cut -c 2- `  
   if [ $kind = "release" ]; then
-    echo '[w]: it is release branch; please checkout on feature branch.'
+    printf "\033[01;38;05;214m[w]: it is release branch; please checkout on feature branch.\033[0m\n"
+    version=`echo $(parse_git_branch) | cut -d'/' -f 2 | rev | cut -c 2- | rev`
+    echo $version
     return
   fi
-  
-  local branch=`echo $(parse_git_branch) | cut -c 2- | rev | cut -c 2- | rev`
-  echo $branch
-  
+
   local number=`echo $(parse_git_branch) | cut -d'/' -f 3 | rev | cut -c 2- | rev`
-  echo $number
  
   if [ -z $number ]; then
-    echo 'number of issue not found;'
+    printf "\033[01;38;05;214m[w]: number of ticket not found;\033[0m\n"
     number=`echo '#0'`
   fi 
   
-  local refs="refs $number;"
-  local msg="$refs $1;"
-  
-  local message=`echo $msg`
-
+  local msg="refs $number; $1;"
   git add . && git commit -m "$msg" && git push origin $branch
+  printf "\033[1;32m[i]: changes sent to remote successfully!\033[m\n"
 }
 
 function tmux-help() {
