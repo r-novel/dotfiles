@@ -8,13 +8,43 @@ export PS1="\[\033[5;49;91m\][☭]\[\033[0m\]\[\033[38;5;113m\]\u\[\033[38;5;39m
 export CLICOLOR=1
 export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
 
-parse_git_branch() {
-        git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+function parse_git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
-alias bash-config='vim $HOME/.bashrc'
-alias vim-config='vim $HOME/.vimrc'
-alias tmux-config='vim $HOME/.tmux.conf'
+function git-acp() {
+  local base=`echo $(parse_git_branch) | cut -d'/' -f 2 | cut -c 2- | rev | cut -c 2- | rev` 
+  if [ -z $(parse_git_branch) ]; then
+    printf "\033[1;32m[i]: branch not found. move to local repository.\033[0m\n"
+    return
+  else if [ "$base" = "master" ]; then
+    printf "\033[01;38;05;214m[w]: it is master branch; auto checkout on default feature branch...\033[0m\n"
+    git checkout -b "feature/master/#0"
+    printf "\033[1;32m[i]: default feature branch has been created.\033[0m\n"
+    fi
+  fi
+  
+  local branch=`echo $(parse_git_branch) | cut -c 2- | rev | cut -c 2- | rev`
+
+  local kind=`echo $(parse_git_branch) | cut -d'/' -f 1 | cut -c 2- `  
+  if [ $kind = "release" ]; then
+    printf "\033[01;38;05;214m[w]: it is release branch; please checkout on feature branch.\033[0m\n"
+    version=`echo $(parse_git_branch) | cut -d'/' -f 2 | rev | cut -c 2- | rev`
+    echo $version
+    return
+  fi
+
+  local number=`echo $(parse_git_branch) | cut -d'/' -f 3 | rev | cut -c 2- | rev`
+ 
+  if [ -z $number ]; then
+    printf "\033[01;38;05;214m[w]: number of ticket not found;\033[0m\n"
+    number=`echo '#0'`
+  fi 
+  
+  local msg="refs $number; $1;"
+  git add . && git commit -m "$msg" && git push origin $branch
+  printf "\033[1;32m[i]: changes sent to remote successfully!\033[m\n"
+}
 
 function tmux-help() {
 	printf "\033[4;49;32m USAGE:\033[0m\n"
@@ -42,8 +72,12 @@ function tmux-help() {
 	printf "\033[38;5;39m:~\033[0m $ \033[5;49;36m<C-a> t\033[0m \t\t\t\t/* big clock; */\n"
 	printf "\033[38;5;39m:~\033[0m $ \033[5;49;36m<C-a> ?\033[0m \t\t\t\t/* list shortcuts; */\n"
 	printf "\033[38;5;39m:~\033[0m $ \033[5;49;36m<C-a> :\033[0m \t\t\t\t/* prompt; */\n"
-	
+
 }
+
+alias bash-config='vim $HOME/.bashrc'
+alias vim-config='vim $HOME/.vimrc'
+alias tmux-config='vim $HOME/.tmux.conf'
 
 PROG_DIR=$HOME/Documents/programming
 alias to-dotvim='cd $HOME/.vim'
