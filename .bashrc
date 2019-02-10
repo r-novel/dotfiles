@@ -8,13 +8,53 @@ export PS1="\[\033[5;49;91m\][☭]\[\033[0m\]\[\033[38;5;113m\]\u\[\033[38;5;39m
 export CLICOLOR=1
 export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
 
-parse_git_branch() {
-        git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+function parse_git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
 alias bash-config='vim $HOME/.bashrc'
 alias vim-config='vim $HOME/.vimrc'
 alias tmux-config='vim $HOME/.tmux.conf'
+
+function git-exec() {
+  local base=`echo $(parse_git_branch) | cut -d'/' -f 2 | cut -c 2- | rev | cut -c 2- | rev` 
+  
+  if [ -z $(parse_git_branch) ]; then
+    echo '[i]: branch not found. move to local repository.'
+    return
+  else if [ "$base" = "master" ]; then
+    echo '[w]: it is master branch; auto checkout on default feature branch...'
+    git checkout -b "feature/master/#0"
+    echo '[i]: default feature branch has been created.'
+    fi
+  fi
+  
+  local kind=`echo $(parse_git_branch) | cut -d'/' -f 1 | cut -c 2- `  
+  echo $kind
+
+  if [ $kind = "release" ]; then
+    echo '[w]: it is release branch; please checkout on feature branch.'
+    return
+  fi
+  
+  local branch=`echo $(parse_git_branch) | cut -c 2- | rev | cut -c 2- | rev`
+  echo $branch
+  
+  local number=`echo $(parse_git_branch) | cut -d'/' -f 3 | rev | cut -c 2- | rev`
+  echo $number
+ 
+  if [ -z $number ]; then
+    echo 'number of issue not found;'
+    number=`echo '#0'`
+  fi 
+  
+  local refs="refs $number;"
+  local msg="$refs $1;"
+  
+  local message=`echo $msg`
+
+  git add . && git commit -m "'$msg'" && git push origin $branch
+}
 
 function tmux-help() {
 	printf "\033[4;49;32m USAGE:\033[0m\n"
