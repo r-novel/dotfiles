@@ -2,7 +2,7 @@
 
 PROG_DIR=$HOME/Documents/programming
 
-alias .='ls -lah --color ./'
+alias .='ls -lah'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
@@ -10,15 +10,9 @@ alias ....='cd ../../..'
 alias mkdir='mkdir -p'
 alias cp-dir='cp -r'
 
-alias ls='ls --color --group-directories-first -p -CF'
-alias ll='ls -lah --color --group-directories-first'
-
 alias rmrf='rm -rf'
 
 # configs;
-alias bash-config='vim $HOME/.bashrc'
-alias reload-bashrc='source $HOME/.bashrc'
-
 alias ssh-config='vim $HOME/.ssh/config'
 
 # development;

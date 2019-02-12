@@ -3,6 +3,9 @@ export PATH=/usr/local/go/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
 export EDITOR='subl -w'
 
+alias bash-config='vim $HOME/.bashrc'
+alias reload-bashrc='source $HOME/.bashrc'
+
 if [ -d $HOME/.bash.d ]; then
 	for f in $HOME/.bash.d/*.sh; do
 		if [ -r $f ]; then
