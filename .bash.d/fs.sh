@@ -7,6 +7,18 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 
+function to-clipboard() {
+  cat $1 | pbcopy
+}
+
+function from-clipboard() {
+  if [ -z $1 ]; then
+    pbpaste
+  else
+    pbpaste > $1
+  fi
+}
+
 alias mkdir='mkdir -p'
 alias cp-dir='cp -r'
 
