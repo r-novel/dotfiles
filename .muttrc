@@ -1,0 +1,36 @@
+set from="Name Surname <example@gmail.com>"
+set realname="Real Name"
+set use_from=yes
+set imap_user="example94@gmail.com"
+set imap_pass="password"
+set spoolfile="imaps://example@imap.gmail.com"
+set folder="imaps://imap.gmail.com:993"
+set record="=Sent"
+set trash="=Deleted"
+unset imap_passive
+set imap_check_subscribed
+set mail_check=60
+
+# enable chacing;
+set header_cache="~/.mutt/header_cache"
+set message_cachedir="~/.mutt/message_cache"
+
+color index green default "~O"
+
+color index brightgreen default "~N"
+color index cyan default "~p"
+color index brightcyan default "~p~O"
+color index brightcyan default "~p~N"
+color index yellow default "~P"
+color index red default "~T"
+color index brightyellow default "~D"
+color hdrdefault green default
+color header brightgreen default ^Subject:
+color quoted cyan default
+color signature red default
+
+set sort=threads
+set visual=vim
+set editor="vim"
+bind index G imap-fetch-mail
+
