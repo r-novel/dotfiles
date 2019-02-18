@@ -1,11 +1,24 @@
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+
 [user]
 	email = example@mail.com
 	name = Name Surname
+
 [github]
 	email = example@mail.com
 	name = Name Surname
+
 [core]
-        editor = vim
+  editor = vim
+
 [color]
 	branch = auto
 	diff = auto
@@ -14,35 +27,135 @@
 	ui = true
 
 [color "branch"]
-	current = yellow reverse
-	local = yellow
-	remote = green
+	current = yellow bold
+	local = green bold
+	remote = cyan bold
 
 [color "diff"]
 	meta = yellow bold
 	frag = magenta bold
 	old = red bold
 	new = green bold
+	whitespace = red reverse
 
 [color "status"]
-	added = green
-	changed = red
-	untracked = yellow
+	added = green bold
+	changed = red bold 
+	untracked = yellow bold
 
 [alias]
-	st = status -sb
-	ci = commit
-	co = checkout
-	br = branch
-	df = diff --color-words='[^[:space:]]'
 	sh = show --color-words='[^[:space:]]'
-        lg = !git log --graph --pretty=format:'%C(131)%h%Creset %C(113)(%ci)%Creset -%C(220)%d%Creset %s %C(39)<%an>%Creset' --abbrev-commit --date=relative
-        lgfzf = !git-lg-fzf
-        rank = shortlog -sn --no-merges
-        cmt = !git add . && git add -u && git commit -m
-        details = log -n1 -p --format=fuller
-        d = difftool
+  lg = !git log --graph --pretty=format:'%C(131)%h%Creset %C(113)(%ci)%Creset -%C(220)%d%Creset %s %C(39)<%an>%Creset' --abbrev-commit --date=relative
+  lgfzf = !git-lg-fzf
+  rank = shortlog -sn --no-merges
+  cmt = !git add . && git add -u && git commit -m
+  details = log -n1 -p --format=fuller
+
+  a = add .
+  ai = add -i
+
+  b = branch
+  ba = branch -a
+  bd = branch -d
+  bdd = branch -D
+  br = branch -r
+  bc = rev-parse --abbrev-ref HEAD
+
+  c = commit
+  ca = commit -a
+  cm = commit -m
+  cam = commit -am
+  cem = commit --allow-empty -m
+  cad = commit --amend
+  ced = commit --allow-empty --amend
+
+  cl = clone
+  cld = clone --depth 1
+
+  d = diff
+  df = diff --color-words='[^[:space:]]'
+  dc = diff --cached
+  dk = diff --check
+  dt = difftool
+
+  f = fetch
+  fo = fetch origin
+  fu = fetch upstream
+
+  m = merge
+  ma = merge --abort
+  mc = merge --continue
+  ms = merge --skip
+
+  co = checkout
+  cob = checkout -b
+
+  pr = prune -v
+
+  ps = push
+  psf = push -f
+  psu = push -u
+  pst = push --tags
+
+  ps = push origin
+  psao = push --all origin
+  psfo = push -f origin
+  psuo = push -u origin
+  psoc = !git push origin $(git bc)
+  psaoc = !git push --all origin $(git bc)
+
+  pl = pull
+  pb = pull --rebase
+
+  plo = pull origin
+  pbo = pull --rebase origin
+  ploc = !git pull origin $(git bc)
+
+  plu = pull upstream
+
+  rb = rebase
+  rba = rebase --abort
+  rbc = rebase --continue
+  rbs = rebase --skip
+  rbi = rebase -i
+
+  re = reset
+  reh = reset HEAD
+  rehd = reset --hard
+  res = reset --soft
+
+  r = remote
+  ra = remote add
+  rr = remote rm
+  rv = remote -v
+  rn = remote rename
+  rp = remote prune
+  rs = remote show
+  rao = remote add origin
+  rau = remote add upstream
+  rro = remote remove origin
+  rru = remote remove upstream
+  rso = remote show origin
+  rsu = remote show upstream
+
+  s = status
+  sb = status -sb
+
+  sa = stash apply
+  sc = stash clear
+  sd = stash drop
+  sl = stash list
+  sp = stash pop
+  ss = stash save
+
+  t = tag
+  td = tag -d
+
+  sh = show
+  shp = show -p
+
 [diff]
-        tool = vimdiff
+  tool = vimdiff
+
 [difftool]
-        prompt = false
+  prompt = false
