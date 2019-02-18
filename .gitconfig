@@ -97,7 +97,7 @@
   psu = push -u
   pst = push --tags
 
-  ps = push origin
+  pso = push origin
   psao = push --all origin
   psfo = push -f origin
   psuo = push -u origin
