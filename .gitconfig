@@ -1,26 +1,48 @@
-[filter "media"]
-	required = true
-	clean = git media clean %f
-	smudge = git media smudge %f
-[filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
-	required = true
 [user]
+	email = example@mail.com
 	name = Name Surname
-  email = example@gmail.com
+[github]
+	email = example@mail.com
+	name = Name Surname
 [core]
-	editor = vim
+        editor = vim
 [color]
+	branch = auto
+	diff = auto
+	status = auto
+	showbranch = auto
 	ui = true
+
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+
+[color "status"]
+	added = green
+	changed = red
+	untracked = yellow
+
 [alias]
-	lg = !git log --graph --pretty=format:'%C(131)%h%Creset %C(113)(%ci)%Creset -%C(220)%d%Creset %s %C(39)<%an>%Creset' --abbrev-commit --date=relative
-	lgfzf = !git-lg-fzf
-	rank = shortlog -sn --no-merges
-	cmt = !git add . && git add -u && git commit -m
-	details = log -n1 -p --format=fuller
-	d = difftool
+	st = status -sb
+	ci = commit
+	co = checkout
+	br = branch
+	df = diff --color-words='[^[:space:]]'
+	sh = show --color-words='[^[:space:]]'
+        lg = !git log --graph --pretty=format:'%C(131)%h%Creset %C(113)(%ci)%Creset -%C(220)%d%Creset %s %C(39)<%an>%Creset' --abbrev-commit --date=relative
+        lgfzf = !git-lg-fzf
+        rank = shortlog -sn --no-merges
+        cmt = !git add . && git add -u && git commit -m
+        details = log -n1 -p --format=fuller
+        d = difftool
 [diff]
-	tool = vimdiff
+        tool = vimdiff
 [difftool]
-	prompt = false
+        prompt = false
