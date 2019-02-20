@@ -1,0 +1,23 @@
+set jid = example@example_jabber.com
+set password = password
+set server = example_jabber.com
+set = disable_random_resource = 1
+set nickname = nickname
+set spell_enable = 1
+set spell_lang = select_language
+set ssl = 0
+set spell_encoding = UTF-8
+set logging = 1
+set load_logs = 1
+set logging_dir = ~/.mcabber/history/
+set logging_ignore_status = 1
+set modules_dir = dir_to_modules
+set beep_on_message = 1
+set autoway = 900
+set message_autoway = Auto-away (idle)
+
+set color_background = default
+set color_msgin = red
+set color_msgout = green
+set color_msghl = green
+set color_bgstatus = white
