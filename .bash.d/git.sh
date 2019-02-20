@@ -15,7 +15,7 @@ function git-acp() {
   if [ $kind == "feature" ]; then
     printf "\033[1;32m[i]: it is feature branch: add, commit, push!\033[0m\n"
     local msg="refs `echo $b | cut -d'/' -f 3`; $1;"
-    git add . && git commit -m "$msg" && git push origin $branch
+    git add . && git commit -m "$msg" && git push origin $b
     return
   fi
 
